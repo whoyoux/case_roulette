@@ -4,7 +4,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 
 export const caseRouter = createTRPCRouter({
-  getAvailableCasesNames: publicProcedure.query(({ ctx }) => {
+  getAvailableCasesName: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.case.findMany({
       where: {
         isAvailable: true,
@@ -17,7 +17,7 @@ export const caseRouter = createTRPCRouter({
       },
     });
   }),
-  getAvailableWithItems: publicProcedure.query(({ ctx }) => {
+  getAvailableCaseWithItems: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.case.findMany({
       where: {
         isAvailable: true,
@@ -29,6 +29,7 @@ export const caseRouter = createTRPCRouter({
         price: true,
         items: {
           select: {
+            dropChange: true,
             item: {
               select: {
                 id: true,
@@ -58,6 +59,7 @@ export const caseRouter = createTRPCRouter({
           imageURL: true,
           items: {
             select: {
+              dropChange: true,
               item: {
                 select: {
                   id: true,
