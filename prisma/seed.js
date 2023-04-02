@@ -36,7 +36,7 @@ async function main() {
       items: {
         create: [
           {
-            dropChange: 70,
+            dropRate: 70,
             item: {
               connect: {
                 id: classic.id,
@@ -44,7 +44,7 @@ async function main() {
             },
           },
           {
-            dropChange: 25,
+            dropRate: 29,
             item: {
               connect: {
                 id: vandal.id,
@@ -52,7 +52,7 @@ async function main() {
             },
           },
           {
-            dropChange: 5,
+            dropRate: 1,
             item: {
               connect: {
                 id: karambit.id,
@@ -73,7 +73,7 @@ async function main() {
       items: {
         create: [
           {
-            dropChange: 95,
+            dropRate: 95,
             item: {
               connect: {
                 id: classic.id,
@@ -81,7 +81,7 @@ async function main() {
             },
           },
           {
-            dropChange: 5,
+            dropRate: 5,
             item: {
               connect: {
                 id: karambit.id,
