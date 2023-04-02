@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 
 export const caseRouter = createTRPCRouter({
@@ -73,7 +77,7 @@ export const caseRouter = createTRPCRouter({
         },
       });
     }),
-  openCase: publicProcedure
+  openCase: protectedProcedure
     .input(
       z.object({
         id: z.string(),
