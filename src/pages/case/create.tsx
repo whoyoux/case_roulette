@@ -54,7 +54,7 @@ const CaseCreate: NextPage = () => {
   };
 
   const removeItemFromList = (name: string) => {
-    setItems([...items.filter((item) => item.name !== name)]);
+    setTempItems([...tempItems.filter((item) => item.name !== name)]);
   };
 
   const addCaseToSeed = (e: FormEvent) => {
@@ -260,7 +260,7 @@ const CaseCreate: NextPage = () => {
         </form>
       </div>
       <div className="w-full max-w-2xl text-center">
-        <h2 className="text-2xl py-2">Your seed:</h2>
+        <h2 className="py-2 text-2xl">Your seed:</h2>
         <textarea
           rows={100}
           className="w-full bg-zinc-800 outline-none"
