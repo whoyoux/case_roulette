@@ -22,11 +22,20 @@ type ItemInRollType =
         id: string;
         name: string;
         imageURL: string;
+        rarity: "COMMON" | "UNCOMMON" | "RARE" | "MYTHICAL" | "LEGENDARY";
       };
       id: string;
       dropRate: number;
     }
   | undefined;
+
+const colorsToItemRarity = {
+  COMMON: "bg-blue-500",
+  UNCOMMON: "bg-violet-500",
+  RARE: "bg-pink-500",
+  MYTHICAL: "bg-red-500",
+  LEGENDARY: "bg-red-500",
+};
 
 const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [roll, setRoll] = useState<ItemInRollType[]>([]);
@@ -102,7 +111,9 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 roll.map((item, index) => (
                   <div
                     key={`${item?.id}__${index}`}
-                    className="flex w-[200px] min-w-[200px] max-w-[200px] flex-col items-center"
+                    className={`flex w-[200px] min-w-[200px] max-w-[200px] flex-col items-center ${
+                      colorsToItemRarity[item!.item.rarity]
+                    }`}
                   >
                     <img src={item?.item.imageURL} alt="Weapon logo" />
                     <p>{item?.item.name}</p>
