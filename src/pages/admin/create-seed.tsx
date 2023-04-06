@@ -6,11 +6,14 @@ type ItemType = {
   percents: number;
 };
 
+type ItemRarity = "COMMON" | "UNCOMMON" | "RARE" | "MYTHICAL" | "LEGENDARY";
+
 const CaseCreate: NextPage = () => {
   const [seed, setSeed] = useState<string>("");
 
   const [itemLabel, setItemLabel] = useState<string>("");
   const [itemName, setItemName] = useState<string>("");
+  const [itemRarity, setItemRarity] = useState<ItemRarity>("COMMON");
   const [itemImageURL, setItemImageURL] = useState<string>("");
 
   const [caseName, setCaseName] = useState<string>("");
@@ -134,6 +137,7 @@ const CaseCreate: NextPage = () => {
         data: {
           name: "${itemLabel}",
           imageURL: "${itemImageURL}",
+          rarity: "${itemRarity}",
         },
       });`;
       setSeed(seed + tempText);
@@ -144,6 +148,10 @@ const CaseCreate: NextPage = () => {
     } catch (err) {
       alert(err);
     }
+  };
+
+  const onChangeRarity = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setItemRarity(e.target.value as ItemRarity);
   };
 
   return (
@@ -173,6 +181,13 @@ const CaseCreate: NextPage = () => {
             value={itemImageURL}
             onChange={(e) => setItemImageURL(e.target.value)}
           />
+          <select onChange={(e) => onChangeRarity(e)} className="form-input ">
+            <option>COMMON</option>
+            <option>UNCOMMON</option>
+            <option>RARE</option>
+            <option>MYTHICAL</option>
+            <option>LEGENDARY</option>
+          </select>
           <button
             type="submit"
             className="form-btn"
