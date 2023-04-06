@@ -92,9 +92,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <div className="w-screen">
         <div className="flex flex-col items-center">
-          <h2 className="mt-20 text-5xl font-bold">
-            {caseObj.name} - {formatter.format(caseObj.price)}
-          </h2>
+          <h2 className="mt-20 text-5xl font-bold">{caseObj.name}</h2>
 
           {/* CASE ITEMS ROLL */}
 
@@ -107,9 +105,9 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                     key={`${item?.id}__${index}`}
                     className={`flex w-[200px] min-w-[200px] max-w-[200px] flex-col items-center ${
                       colorsToItemRarity[item!.item.rarity]
-                    } bg-opacity-75`}
+                    }`}
                   >
-                    <img src={item?.item.imageURL} alt="Weapon image" />
+                    <img src={item?.item.imageURL} alt="Weapon logo" />
                     <p>{item?.item.name}</p>
                   </div>
                 ))}
@@ -121,7 +119,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             onClick={openCase}
             disabled={openCaseMutation.isLoading}
           >
-            Open case
+            Open case - {formatter.format(caseObj.price)}
           </button>
         </div>
 
@@ -138,9 +136,10 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div>{dropRate}%</div>
                 <Image
                   src={item.imageURL}
-                  alt="Item image"
+                  alt="Case logo"
                   width={150}
                   height={150}
+                  className="w-[150px]"
                 />
                 <h4 className="text-sm">{item.name}</h4>
               </div>
