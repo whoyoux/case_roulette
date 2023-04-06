@@ -23,7 +23,7 @@ const Header = () => {
         {session ? (
           <>
             <button
-              className="rounded-md bg-zinc-900 px-8 py-3 text-center"
+              className="rounded-md bg-zinc-900 px-8 py-3 text-center font-medium"
               onClick={addBalance}
             >
               {formatter.format(data?.balance || 0)}
@@ -49,7 +49,7 @@ interface UserDropdownProps {
 const UserDropdown = ({ username }: UserDropdownProps) => {
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className="inline-flex justify-center rounded-md bg-zinc-900 px-7 py-3">
+      <Menu.Button className="inline-flex justify-center rounded-md bg-zinc-900 px-7 py-3 font-medium">
         {username}
       </Menu.Button>
       <Transition
