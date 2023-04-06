@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <header className="flex w-screen items-center justify-between bg-zinc-800 px-10 py-10">
-      <Link href="/" className="text-2xl font-medium">
+      <Link href="/" className="text-4xl font-medium">
         Case Roulette
       </Link>
       <div className="flex items-center gap-5">
@@ -29,7 +29,6 @@ const Header = () => {
             >
               {formatter.format(data?.balance || 0)}
             </button>
-            {/* <button onClick={() => signOut()}>{session.user.name}</button> */}
             <UserDropdown username={session.user.name || "username"} />
           </>
         ) : (
