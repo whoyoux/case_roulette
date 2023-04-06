@@ -16,7 +16,7 @@ const config = {
     },
   },
   // @ts-ignore
-  plugins: [],
+  plugins: [require("@headlessui/tailwindcss")({ prefix: "ui" })],
 };
 
 module.exports = config;
