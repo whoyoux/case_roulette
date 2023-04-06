@@ -16,6 +16,7 @@ import useSound from "use-sound";
 import { formatter } from "@/utils/balanceFormatter";
 import toast from "react-hot-toast";
 import { ItemRarity, colorsToItemRarity } from "@/constants";
+import Image from "next/image";
 
 type ItemInRollType =
   | {
@@ -108,7 +109,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       colorsToItemRarity[item!.item.rarity]
                     } bg-opacity-75`}
                   >
-                    <img src={item?.item.imageURL} alt="Weapon logo" />
+                    <img src={item?.item.imageURL} alt="Weapon image" />
                     <p>{item?.item.name}</p>
                   </div>
                 ))}
@@ -135,11 +136,11 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 className="relative flex flex-col items-center rounded-2xl bg-zinc-800 p-4"
               >
                 <div>{dropRate}%</div>
-                <img
+                <Image
                   src={item.imageURL}
-                  alt="Case logo"
+                  alt="Item image"
                   width={150}
-                  className=""
+                  height={150}
                 />
                 <h4 className="text-sm">{item.name}</h4>
               </div>

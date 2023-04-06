@@ -9,6 +9,9 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ["steamcdn-a.akamaihd.net", "csgostash.com", "steamcommunity-a.akamaihd.net"],
+  },
   reactStrictMode: true,
 
   /**

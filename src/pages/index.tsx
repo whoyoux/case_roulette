@@ -1,6 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 
 import superjson from "superjson";
 import { appRouter } from "@/server/api/root";
@@ -31,10 +32,11 @@ const Home: NextPage = (
                 key={caseObject.id}
               >
                 <div className="group flex cursor-pointer flex-col items-center rounded-lg border-2 border-transparent bg-zinc-800 px-4 py-2 font-medium hover:border-red-600">
-                  <img
+                  <Image
                     src={caseObject.imageURL}
                     alt="Case logo"
                     width={200}
+                    height={200}
                     className="transition-all group-hover:scale-110"
                   />
                   <h1 className="text-xl">{caseObject.name}</h1>

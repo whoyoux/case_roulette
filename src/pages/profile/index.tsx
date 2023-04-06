@@ -3,6 +3,7 @@ import { api } from "@/utils/api";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import React from "react";
+import Image from "next/image";
 
 const UserPage: NextPage = () => {
   const { data: session } = useSession();
@@ -26,7 +27,7 @@ const UserPage: NextPage = () => {
                   colorsToItemRarity[item.wonItem.rarity]
                 } bg-opacity-75`}
               >
-                <img
+                <Image
                   src={item.wonItem.imageURL}
                   alt="item image"
                   width={150}
