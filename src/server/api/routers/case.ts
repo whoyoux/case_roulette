@@ -52,8 +52,8 @@ export const caseRouter = createTRPCRouter({
         id: z.string(),
       })
     )
-    .query(({ ctx, input }) => {
-      return ctx.prisma.case.findUnique({
+    .query(async ({ ctx, input }) => {
+      const caseObj = await ctx.prisma.case.findUnique({
         where: {
           id: input.id,
         },
@@ -76,6 +76,12 @@ export const caseRouter = createTRPCRouter({
           price: true,
         },
       });
+
+      caseObj!.items.sort(
+        (firstItem, secondItem) => firstItem.dropRate - secondItem.dropRate
+      );
+
+      return caseObj;
     }),
   openCase: protectedProcedure
     .input(
