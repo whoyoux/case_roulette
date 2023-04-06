@@ -1,3 +1,4 @@
+import { ItemRarity } from "@/constants";
 import type { NextPage } from "next";
 import React, { FormEvent, useState } from "react";
 
@@ -5,8 +6,6 @@ type ItemType = {
   name: string;
   percents: number;
 };
-
-type ItemRarity = "COMMON" | "UNCOMMON" | "RARE" | "MYTHICAL" | "LEGENDARY";
 
 const CaseCreate: NextPage = () => {
   const [seed, setSeed] = useState<string>("");

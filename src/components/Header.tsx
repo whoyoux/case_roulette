@@ -64,7 +64,7 @@ const UserDropdown = ({ username }: UserDropdownProps) => {
         <Menu.Items className="absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md border-2 border-red-500 bg-zinc-800 p-2">
           <Menu.Item key={"DROPDOWN/profile"} as={Fragment}>
             <Link
-              href="profile"
+              href="/profile"
               className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
             >
               Profile

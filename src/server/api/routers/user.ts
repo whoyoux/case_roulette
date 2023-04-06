@@ -16,14 +16,29 @@ export const userRouter = createTRPCRouter({
     return balance;
   }),
   getInventory: protectedProcedure.query(async ({ ctx }) => {
-    return await ctx.prisma.openedCase.findMany({
+    const inv = await ctx.prisma.openedCase.findMany({
       where: {
         userId: ctx.session.user.id,
       },
       select: {
         id: true,
-        wonItem: true,
+        wonItem: {
+          select: {
+            name: true,
+            imageURL: true,
+            rarity: true,
+          },
+        },
+        createdAt: true,
       },
     });
+
+    inv.sort(
+      (firstItem, secondItem) =>
+        new Date(secondItem.createdAt).valueOf() -
+        new Date(firstItem.createdAt).valueOf()
+    );
+
+    return inv;
   }),
 });

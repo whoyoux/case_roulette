@@ -78,7 +78,7 @@ export const caseRouter = createTRPCRouter({
         },
       });
 
-      caseObj!.items.sort(
+      caseObj?.items.sort(
         (firstItem, secondItem) => firstItem.dropRate - secondItem.dropRate
       );
 

@@ -15,6 +15,7 @@ import { useRef, useState } from "react";
 import useSound from "use-sound";
 import { formatter } from "@/utils/balanceFormatter";
 import toast from "react-hot-toast";
+import { ItemRarity, colorsToItemRarity } from "@/constants";
 
 type ItemInRollType =
   | {
@@ -22,20 +23,12 @@ type ItemInRollType =
         id: string;
         name: string;
         imageURL: string;
-        rarity: "COMMON" | "UNCOMMON" | "RARE" | "MYTHICAL" | "LEGENDARY";
+        rarity: ItemRarity;
       };
       id: string;
       dropRate: number;
     }
   | undefined;
-
-const colorsToItemRarity = {
-  COMMON: "bg-blue-500",
-  UNCOMMON: "bg-violet-500",
-  RARE: "bg-pink-500",
-  MYTHICAL: "bg-red-500",
-  LEGENDARY: "bg-red-500",
-};
 
 const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [roll, setRoll] = useState<ItemInRollType[]>([]);
@@ -113,7 +106,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                     key={`${item?.id}__${index}`}
                     className={`flex w-[200px] min-w-[200px] max-w-[200px] flex-col items-center ${
                       colorsToItemRarity[item!.item.rarity]
-                    }`}
+                    } bg-opacity-75`}
                   >
                     <img src={item?.item.imageURL} alt="Weapon logo" />
                     <p>{item?.item.name}</p>
