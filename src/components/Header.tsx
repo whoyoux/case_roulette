@@ -8,13 +8,8 @@ const Header = () => {
 
   const { data } = api.user.getBalance.useQuery();
 
-  // const [balance] = api.useQueries((t) => [
-  //   t.user.getBalance(), { enabled: !!session}
-  // ])
-
-  // const {data } = balance;
   return (
-    <header className="flex w-screen items-center justify-between bg-gray-200 px-10 py-10">
+    <header className="flex w-screen items-center justify-between bg-zinc-800 px-10 py-10">
       <Link href="/" className="text-2xl font-medium">
         Case Roulette
       </Link>

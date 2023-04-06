@@ -95,8 +95,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
           {/* CASE ITEMS ROLL */}
 
-          <div className="relative mt-10 flex h-64  w-11/12 items-center overflow-hidden bg-gray-100">
-            <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:content-['▲']"></div>
+          <div className="relative mt-10 flex h-64  w-11/12 items-center overflow-hidden bg-zinc-800">
+            <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:text-red-500 before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:text-red-500 after:content-['▲']"></div>
             <div ref={rollRef} className="flex">
               {showRoll &&
                 roll.map((item, index) => (
@@ -128,7 +128,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}
-                className="relative flex flex-col items-center rounded-2xl bg-gray-200 p-4"
+                className="relative flex flex-col items-center rounded-2xl bg-zinc-800 p-4"
               >
                 <div>{dropRate}%</div>
                 <img
