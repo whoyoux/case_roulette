@@ -4,7 +4,6 @@ import { signIn, useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { forwardRef } from "react";
 
 const Header = () => {
   const { data: session } = useSession();
@@ -16,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <header className="flex w-screen items-center justify-between bg-zinc-800 px-10 py-10">
+    <header className="flex w-screen max-w-full items-center justify-between bg-zinc-800 px-10 py-10">
       <Link href="/" className="text-4xl font-medium">
         Case Roulette
       </Link>
