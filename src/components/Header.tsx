@@ -28,7 +28,10 @@ const Header = () => {
             >
               {formatter.format(data?.balance || 0)}
             </button>
-            <UserDropdown username={session.user.name || "username"} />
+            <UserDropdown
+              username={session.user.name || "username"}
+              isAdmin={session.user.isAdmin}
+            />
           </>
         ) : (
           <>
@@ -44,9 +47,10 @@ const Header = () => {
 
 interface UserDropdownProps {
   username: string;
+  isAdmin: boolean;
 }
 
-const UserDropdown = ({ username }: UserDropdownProps) => {
+const UserDropdown = ({ username, isAdmin }: UserDropdownProps) => {
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="inline-flex justify-center rounded-md bg-zinc-900 px-7 py-3 font-medium">
@@ -78,6 +82,26 @@ const UserDropdown = ({ username }: UserDropdownProps) => {
               Sign out
             </button>
           </Menu.Item>
+          {isAdmin && (
+            <div className="mt-2 flex flex-col">
+              <Menu.Item key={"DROPDOWN/admin/create"} as={Fragment}>
+                <Link
+                  href="/admin/create"
+                  className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+                >
+                  Create case
+                </Link>
+              </Menu.Item>
+              <Menu.Item key={"DROPDOWN/admin/create-seed"} as={Fragment}>
+                <Link
+                  href="/admin/create-seed"
+                  className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+                >
+                  Create seed
+                </Link>
+              </Menu.Item>
+            </div>
+          )}
         </Menu.Items>
       </Transition>
     </Menu>
