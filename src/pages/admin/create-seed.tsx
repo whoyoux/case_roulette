@@ -1,5 +1,8 @@
 import { ItemRarity } from "@/constants";
-import type { NextPage } from "next";
+import { authOptions } from "@/server/auth";
+import { prisma } from "@/server/db";
+import type { GetServerSidePropsContext, NextPage } from "next";
+import { getServerSession } from "next-auth";
 import React, { FormEvent, useState } from "react";
 
 type ItemType = {
@@ -284,6 +287,38 @@ const CaseCreate: NextPage = () => {
       </div>
     </main>
   );
+};
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  console.log("Checking if user is an admin.");
+
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  console.log(session);
+
+  if (!session) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const isAdminRes = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    },
+    select: {
+      isAdmin: true,
+    },
+  });
+
+  if (!isAdminRes || !isAdminRes.isAdmin) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {},
+  };
 };
 
 export default CaseCreate;
