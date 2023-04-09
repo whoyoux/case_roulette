@@ -8,5 +8,14 @@ const colorsToItemRarity = {
   LEGENDARY: "bg-orange-400",
 };
 
+type ModalType = {
+  title: string,
+  isOpen: boolean;
+  closeModal: () => void;
+  children: React.ReactNode
+}
+
+
+
 export { colorsToItemRarity };
-export type { ItemRarity };
+export type { ItemRarity, ModalType };

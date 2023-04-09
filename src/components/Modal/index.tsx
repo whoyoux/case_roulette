@@ -1,15 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import Image from 'next/image'
+import { ModalType } from '@/constants'
 
-type ModalType = {
-    name: string;
-    imageURL: string
-    isOpen: boolean;
-    closeModal: () => void
-}
 
-const Modal = ({ isOpen = false, name, imageURL, closeModal }: ModalType) => {
+const Modal = ({ isOpen = false, closeModal, title, children }: ModalType) => {
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -42,41 +37,11 @@ const Modal = ({ isOpen = false, name, imageURL, closeModal }: ModalType) => {
                                         as="h3"
                                         className="text-2xl font-medium leading-6 py-2"
                                     >
-                                        New drop 😯😯😯
+                                        {title}
                                     </Dialog.Title>
 
-                                    <div className='relative w-1/2 flex flex-col h-[150px]'>
-                                        <Image src={imageURL} fill alt="item image" placeholder='blur' blurDataURL={imageURL} />
+                                    {children}
 
-                                    </div>
-
-                                    <div>
-                                        <h2 className='text-2xl font-medium'>{name}</h2>
-                                    </div>
-
-                                    <div className="mt-4 flex gap-4">
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm"
-                                            onClick={closeModal}
-                                        >
-                                            Sell
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm"
-                                            onClick={closeModal}
-                                        >
-                                            Upgrade
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm"
-                                            onClick={closeModal}
-                                        >
-                                            Go back
-                                        </button>
-                                    </div>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

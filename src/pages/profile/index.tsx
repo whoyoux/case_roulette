@@ -36,6 +36,8 @@ const UserPage: NextPage = () => {
                     alt="item image"
                     width={150}
                     height={150}
+                    placeholder="blur"
+                    blurDataURL={item.wonItem.imageURL}
                   />
                   <p className="truncate font-medium">{item.wonItem.name}</p>
                 </div>

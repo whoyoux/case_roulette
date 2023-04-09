@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import useSound from "use-sound";
 import customToast from "@/components/Notification";
 import Modal from "@/components/Modal";
+import OpenCaseModal from "@/components/Modal/OpenCaseModal";
 
 type ItemInRollType =
   | {
@@ -120,7 +121,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <title>{`${caseObj.name} - Case Roulette`}</title>
       </Head>
 
-      <Modal name={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} closeModal={() => setModal(false)} />
+      <OpenCaseModal itemName={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} closeModal={() => setModal(false)} title="New drop 😯😯😯" />
 
       <div className="w-screen">
         <div className="flex flex-col items-center">
@@ -180,6 +181,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   width={150}
                   height={150}
                   className="w-[150px]"
+                  placeholder="blur"
+                  blurDataURL={item.imageURL}
                 />
                 <h4 className="text-sm">{item.name}</h4>
               </div>

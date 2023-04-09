@@ -38,6 +38,8 @@ const Home: NextPage = (
                     width={200}
                     height={200}
                     className="transition-all group-hover:scale-110"
+                    placeholder="blur"
+                    blurDataURL={caseObject.imageURL}
                   />
                   <h1 className="text-xl">{caseObject.name}</h1>
                 </div>
