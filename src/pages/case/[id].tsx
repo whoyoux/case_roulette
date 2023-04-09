@@ -9,7 +9,7 @@ import { appRouter } from "@/server/api/root";
 import { api } from "@/utils/api";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import superjson from "superjson";
 
 import { ItemRarity, colorsToItemRarity } from "@/constants";
@@ -71,7 +71,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         [
           {
             transform: `translateX(-${
-              0.9 * 200 * 49 - ((window.innerWidth * (11 / 12)) / 2 - 80)
+              0.9 * 208 * 49 - ((window.innerWidth * (11 / 12)) / 2 - 80)
             }px)`,
           },
         ],
@@ -83,6 +83,17 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       )
     );
   };
+
+  useEffect(() => {
+    //TODO: Add notification what user win
+    if(anim) 
+      anim.onfinish = () => console.log("FINISH");
+    
+    return () => {
+      if(anim)
+        anim.onfinish = () => {};
+    }
+  }, [anim])
 
   return (
     <>
@@ -98,12 +109,12 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
           <div className="relative mt-10 flex h-64  w-11/12 items-center overflow-hidden bg-zinc-800">
             <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:text-red-500 before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:text-red-500 after:content-['▲']"></div>
-            <div ref={rollRef} className="flex">
+            <div ref={rollRef} className="flex" onTransitionEnd={(e) => console.log(`end!!! ${e.type}`)}>
               {showRoll &&
                 roll.map((item, index) => (
                   <div
                     key={`${item?.id}__${index}`}
-                    className={`flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${
+                    className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${
                       colorsToItemRarity[item!.item.rarity]
                     }`}
                   >
