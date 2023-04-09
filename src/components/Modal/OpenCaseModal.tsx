@@ -16,7 +16,7 @@ type OpenCaseModalType = {
 const OpenCaseModal = ({ title, itemName, imageURL, isOpen, closeModal }: OpenCaseModalType) => {
     return (
         <Modal title={title} isOpen={isOpen} closeModal={closeModal}>
-            <div className='relative w-1/2 flex flex-col h-[200px]'>
+            <div className='relative w-full sm:w-1/2 flex flex-col h-[200px]'>
                 <Image src={imageURL} fill alt="item image" placeholder='blur' blurDataURL={imageURL} />
             </div>
 
