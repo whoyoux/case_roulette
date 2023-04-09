@@ -150,17 +150,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           >
             Open case - {formatter.format(caseObj.price)}
           </button>
-          <button
-            onClick={() =>
-              customToast({
-                message: latestWonItem.name ?? "?????",
-                imageURL: latestWonItem.imageURL,
-              })
-            }
-          >
-            notify
-          </button>
-          <button onClick={() => toast.success("dupa")}>default</button>
+
         </div>
 
         {/* ITEMS IN CASE  */}
