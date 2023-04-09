@@ -23,7 +23,7 @@ const Header = () => {
         {session ? (
           <>
             <button
-              className="rounded-md bg-zinc-900 px-8 py-3 text-center font-medium"
+              className="hidden md:flex rounded-md bg-zinc-900 px-8 py-3 text-center font-medium"
               onClick={addBalance}
             >
               {formatter.format(data?.balance || 0)}
@@ -31,6 +31,8 @@ const Header = () => {
             <UserDropdown
               username={session.user.name || "username"}
               isAdmin={session.user.isAdmin}
+              addBalance={addBalance}
+              balance={data ? data.balance : null}
             />
           </>
         ) : (
@@ -48,9 +50,11 @@ const Header = () => {
 interface UserDropdownProps {
   username: string;
   isAdmin: boolean;
+  balance: number | null;
+  addBalance: () => void;
 }
 
-const UserDropdown = ({ username, isAdmin }: UserDropdownProps) => {
+const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownProps) => {
   return (
     <Menu as="div" className="relative">
       <Menu.Button className="inline-flex justify-center rounded-md bg-zinc-900 px-7 py-3 font-medium">
@@ -65,7 +69,17 @@ const UserDropdown = ({ username, isAdmin }: UserDropdownProps) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md border-2 border-red-500 bg-zinc-800 p-2">
+        <Menu.Items className="z-20 absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md border-2 border-red-500 bg-zinc-800 p-2">
+          <div className="block md:hidden">
+          {balance && <Menu.Item key={"DROPDOWN/balance"} as={Fragment}>
+            <button
+              className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+              onClick={addBalance}
+            >
+              {formatter.format(balance)}
+            </button>
+          </Menu.Item>}
+          </div>
           <Menu.Item key={"DROPDOWN/profile"} as={Fragment}>
             <Link
               href="/profile"

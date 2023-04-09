@@ -5,18 +5,18 @@ import type {
   InferGetStaticPropsType,
 } from "next/types";
 
-import superjson from "superjson";
 import { appRouter } from "@/server/api/root";
+import { api } from "@/utils/api";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import Head from "next/head";
-import { api } from "@/utils/api";
 import { useRef, useState } from "react";
+import superjson from "superjson";
 
-import useSound from "use-sound";
-import { formatter } from "@/utils/balanceFormatter";
-import toast from "react-hot-toast";
 import { ItemRarity, colorsToItemRarity } from "@/constants";
+import { formatter } from "@/utils/balanceFormatter";
 import Image from "next/image";
+import toast from "react-hot-toast";
+import useSound from "use-sound";
 
 type ItemInRollType =
   | {
@@ -132,6 +132,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <div className="w-11/12 px-10">
           <h2 className="mt-10 text-2xl">Items in this case</h2>
           <div className="mt-5 flex flex-col flex-wrap gap-5 md:flex-row">
+            
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}
