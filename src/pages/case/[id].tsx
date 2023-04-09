@@ -18,6 +18,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import useSound from "use-sound";
 import customToast from "@/components/Notification";
+import Modal from "@/components/Modal";
 
 type ItemInRollType =
   | {
@@ -40,6 +41,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     name: "",
     imageURL: "",
   });
+
+  const [isOpenModal, setModal] = useState<boolean>(false);
 
   const rollRef = useRef<HTMLDivElement | null>(null);
 
@@ -72,6 +75,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       imageURL: res.wonItem!.item.imageURL,
     });
 
+
+
     if (!rollRef) return;
 
     if (anim) anim.cancel();
@@ -95,11 +100,14 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   useEffect(() => {
     if (anim && latestWonItem)
-      anim.onfinish = () =>
-        customToast({
-          message: latestWonItem.name,
-          imageURL: latestWonItem.imageURL,
-        });
+      anim.onfinish = () => {
+        // customToast({
+        //   message: latestWonItem.name,
+        //   imageURL: latestWonItem.imageURL,
+        // });
+        setModal(true);
+      }
+
 
     return () => {
       if (anim) anim.onfinish = () => { };
@@ -111,6 +119,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       <Head>
         <title>{`${caseObj.name} - Case Roulette`}</title>
       </Head>
+
+      <Modal name={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} closeModal={() => setModal(false)} />
 
       <div className="w-screen">
         <div className="flex flex-col items-center">

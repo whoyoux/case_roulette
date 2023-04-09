@@ -28,9 +28,8 @@ const UserPage: NextPage = () => {
               items.length > 0 &&
               items.map((item) => (
                 <div
-                  className={`flex h-[175px] w-[175px] flex-col items-center justify-center ${
-                    colorsToItemRarity[item.wonItem.rarity]
-                  } bg-opacity-75`}
+                  className={`flex h-[175px] w-[175px] flex-col items-center justify-center ${colorsToItemRarity[item.wonItem.rarity]
+                    } bg-opacity-75`}
                 >
                   <Image
                     src={item.wonItem.imageURL}

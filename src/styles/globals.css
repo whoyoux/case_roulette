@@ -7,6 +7,14 @@
     @apply cursor-pointer rounded-xl  bg-zinc-800 px-8 py-4 font-medium text-white transition-all hover:bg-red-500  disabled:cursor-not-allowed disabled:opacity-10;
   }
 
+  .btn {
+    @apply px-8 py-4;
+  }
+
+  .btn-sm {
+    @apply px-6 py-3;
+  }
+
   .form-input {
     @apply rounded-md bg-zinc-800 px-7 py-3 text-xl focus:outline-none;
   }
