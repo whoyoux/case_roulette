@@ -17,24 +17,29 @@ import { formatter } from "@/utils/balanceFormatter";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import useSound from "use-sound";
+import customToast from "@/components/Notification";
 
 type ItemInRollType =
   | {
-      item: {
-        id: string;
-        name: string;
-        imageURL: string;
-        rarity: ItemRarity;
-      };
+    item: {
       id: string;
-      dropRate: number;
-    }
+      name: string;
+      imageURL: string;
+      rarity: ItemRarity;
+    };
+    id: string;
+    dropRate: number;
+  }
   | undefined;
 
 const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [roll, setRoll] = useState<ItemInRollType[]>([]);
   const [anim, setAnim] = useState<Animation | null>(null);
   const [showRoll, setShowRoll] = useState(false);
+  const [latestWonItem, setLatestWonItem] = useState({
+    name: "",
+    imageURL: "",
+  });
 
   const rollRef = useRef<HTMLDivElement | null>(null);
 
@@ -62,6 +67,11 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     console.log(`You won: ${res.wonItem!.item.name}`);
 
+    setLatestWonItem({
+      name: res.wonItem!.item.name,
+      imageURL: res.wonItem!.item.imageURL,
+    });
+
     if (!rollRef) return;
 
     if (anim) anim.cancel();
@@ -70,9 +80,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       rollRef.current!.animate(
         [
           {
-            transform: `translateX(-${
-              0.9 * 208 * 49 - ((window.innerWidth * (11 / 12)) / 2 - 80)
-            }px)`,
+            transform: `translateX(-${0.9 * 208 * 49 - ((window.innerWidth * (11 / 12)) / 2 - 80)
+              }px)`,
           },
         ],
         {
@@ -85,15 +94,17 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   };
 
   useEffect(() => {
-    //TODO: Add notification what user win
-    if(anim) 
-      anim.onfinish = () => console.log("FINISH");
-    
+    if (anim && latestWonItem)
+      anim.onfinish = () =>
+        customToast({
+          message: latestWonItem.name,
+          imageURL: latestWonItem.imageURL,
+        });
+
     return () => {
-      if(anim)
-        anim.onfinish = () => {};
-    }
-  }, [anim])
+      if (anim) anim.onfinish = () => { };
+    };
+  }, [anim]);
 
   return (
     <>
@@ -109,14 +120,17 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
           <div className="relative mt-10 flex h-64  w-11/12 items-center overflow-hidden bg-zinc-800">
             <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:text-red-500 before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:text-red-500 after:content-['▲']"></div>
-            <div ref={rollRef} className="flex" onTransitionEnd={(e) => console.log(`end!!! ${e.type}`)}>
+            <div
+              ref={rollRef}
+              className="flex"
+              onTransitionEnd={(e) => console.log(`end!!! ${e.type}`)}
+            >
               {showRoll &&
                 roll.map((item, index) => (
                   <div
                     key={`${item?.id}__${index}`}
-                    className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${
-                      colorsToItemRarity[item!.item.rarity]
-                    }`}
+                    className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${colorsToItemRarity[item!.item.rarity]
+                      }`}
                   >
                     <img
                       src={item?.item.imageURL}
@@ -136,6 +150,17 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           >
             Open case - {formatter.format(caseObj.price)}
           </button>
+          <button
+            onClick={() =>
+              customToast({
+                message: latestWonItem.name ?? "?????",
+                imageURL: latestWonItem.imageURL,
+              })
+            }
+          >
+            notify
+          </button>
+          <button onClick={() => toast.success("dupa")}>default</button>
         </div>
 
         {/* ITEMS IN CASE  */}
@@ -143,7 +168,6 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <div className="w-11/12 px-10">
           <h2 className="mt-10 text-2xl">Items in this case</h2>
           <div className="mt-5 flex flex-col flex-wrap gap-5 md:flex-row">
-            
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}

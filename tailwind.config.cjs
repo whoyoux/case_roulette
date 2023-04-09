@@ -9,9 +9,29 @@ const config = {
             transform: "translateX(-100%)",
           },
         },
+        fadeInRight: {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-2rem)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        fadeOutLeft: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
       },
       animation: {
         roll: "rollAnim 10s easy-in-out infinite",
+        enter: "fadeInRight 300ms ease-out",
+        leave: "fadeOutLeft 300ms ease-in forwards",
       },
     },
   },
