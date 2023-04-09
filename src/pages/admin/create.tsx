@@ -4,7 +4,7 @@ import { prisma } from "@/server/db";
 import { api } from "@/utils/api";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 type ItemType = {
@@ -28,8 +28,14 @@ const CreateCase: NextPage = () => {
 
   const [tempItems, setTempItems] = useState<ItemType[]>([]);
 
+  const [percentsLeft, setPercentsLeft] = useState<number>(100);
+
   const createItemMutation = api.admin.itemCreate.useMutation();
   const createCaseMutation = api.admin.caseCreate.useMutation();
+
+  useEffect(() => {
+    setPercentsLeft(100 - countPercents());
+  }, [tempItems]);
 
   const addItemToTempList = () => {
     try {
@@ -63,6 +69,12 @@ const CreateCase: NextPage = () => {
     setTempItems([...tempItems.filter((item) => item.id !== name)]);
   };
 
+  const countPercents = () => {
+    return tempItems.reduce((acc, curr) => {
+      return acc + curr.percents;
+    }, 0);
+  };
+
   const createCase = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -80,9 +92,7 @@ const CreateCase: NextPage = () => {
         throw new Error("Case price must be a number!");
       }
 
-      const totalPercents = tempItems.reduce((acc, curr) => {
-        return acc + curr.percents;
-      }, 0);
+      const totalPercents = countPercents();
 
       if (totalPercents !== 100) {
         const difference = Math.abs(100 - totalPercents);
@@ -115,7 +125,9 @@ const CreateCase: NextPage = () => {
 
       toast.success("Created a case!");
     } catch (err) {
-      alert(err);
+      //alert(err);
+      console.error(err);
+      toast.error("Some error occurs, pleace check console");
     }
   };
 
@@ -251,6 +263,9 @@ const CreateCase: NextPage = () => {
                 </div>
               </div>
             )}
+            <div className="py-2 text-xl ">
+              Percents left: <b>{percentsLeft.toString()}</b>
+            </div>
           </div>
 
           <button

@@ -3,7 +3,7 @@ import { authOptions } from "@/server/auth";
 import { prisma } from "@/server/db";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 
 type ItemType = {
   name: string;
@@ -26,6 +26,18 @@ const CaseCreate: NextPage = () => {
   const [tempItemPercents, setTempItemPercents] = useState<string>("");
 
   const [tempItems, setTempItems] = useState<ItemType[]>([]);
+
+  const [percentsLeft, setPercentsLeft] = useState<number>(100);
+
+  useEffect(() => {
+    setPercentsLeft(100 - countPercents());
+  }, [tempItems]);
+
+  const countPercents = () => {
+    return tempItems.reduce((acc, curr) => {
+      return acc + curr.percents;
+    }, 0);
+  };
 
   const addItemToTempList = () => {
     try {
@@ -79,9 +91,7 @@ const CaseCreate: NextPage = () => {
         throw new Error("Case price must be a number!");
       }
 
-      const totalPercents = tempItems.reduce((acc, curr) => {
-        return acc + curr.percents;
-      }, 0);
+      const totalPercents = countPercents();
 
       if (totalPercents !== 100) {
         const difference = Math.abs(100 - totalPercents);

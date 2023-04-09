@@ -78,7 +78,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         {
           duration: 4000,
           fill: "forwards",
-          easing: "ease-in-out",
+          easing: "cubic-bezier(0,0,0,1)",
         }
       )
     );
@@ -103,12 +103,16 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 roll.map((item, index) => (
                   <div
                     key={`${item?.id}__${index}`}
-                    className={`flex w-[200px] min-w-[200px] max-w-[200px] flex-col items-center ${
+                    className={`flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${
                       colorsToItemRarity[item!.item.rarity]
                     }`}
                   >
-                    <img src={item?.item.imageURL} alt="Weapon logo" />
-                    <p>{item?.item.name}</p>
+                    <img
+                      src={item?.item.imageURL}
+                      alt="Weapon logo"
+                      width={150}
+                    />
+                    <p className="truncate">{item?.item.name}</p>
                   </div>
                 ))}
             </div>
