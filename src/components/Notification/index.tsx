@@ -17,7 +17,7 @@ const customToast = ({ message, imageURL }: CustomToastType) =>
           <Image src={imageURL} width={100} height={100} alt="item image" />
         </div>
       )}
-      <div className="px-4 py-6">New item: <b>{message}</b></div>
+      <div className="px-4 py-6">{message}</div>
     </div>
   ));
 export default customToast;

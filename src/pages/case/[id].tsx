@@ -17,9 +17,8 @@ import { formatter } from "@/utils/balanceFormatter";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import useSound from "use-sound";
-import customToast from "@/components/Notification";
-import Modal from "@/components/Modal";
 import OpenCaseModal from "@/components/Modal/OpenCaseModal";
+import customToast from "@/components/Notification";
 
 type ItemInRollType =
   | {
@@ -58,7 +57,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       utils.user.getBalance.invalidate();
     },
     onError(err) {
-      toast.error(err.message);
+      //toast.error(err.message);
+      customToast({ message: err.message })
     },
   });
 
@@ -148,7 +148,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       alt="Weapon logo"
                       width={150}
                     />
-                    <p className="truncate">{item?.item.name}</p>
+                    <p className="truncate text-sm font-medium">{item?.item.name}</p>
                   </div>
                 ))}
             </div>
@@ -184,7 +184,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   placeholder="blur"
                   blurDataURL={item.imageURL}
                 />
-                <h4 className="text-sm">{item.name}</h4>
+                <h4 className="text-sm font-medium">{item.name}</h4>
               </div>
             ))}
           </div>
