@@ -143,10 +143,12 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                     className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${colorsToItemRarity[item!.item.rarity]
                       }`}
                   >
-                    <img
-                      src={item?.item.imageURL}
+                    <Image
+                      src={item?.item.imageURL || ''}
                       alt="Weapon logo"
                       width={150}
+                      placeholder="blur"
+                      blurDataURL={item?.item.imageURL}
                     />
                     <p className="truncate text-sm font-medium">{item?.item.name}</p>
                   </div>
