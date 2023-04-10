@@ -147,6 +147,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       src={item?.item.imageURL || ''}
                       alt="Weapon logo"
                       width={150}
+                      height={Infinity}
                       placeholder="blur"
                       blurDataURL={item?.item.imageURL}
                     />
