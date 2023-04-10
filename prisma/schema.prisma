@@ -103,10 +103,12 @@ model ItemInCase {
 }
 
 model Item {
+    // TODO: Need to add basic price
     id       String @id @default(cuid())
     name     String
     imageURL String @db.VarChar(500)
     rarity   Rarity @default(COMMON)
+    price    Int    @default(10)
 
     itemsInCase ItemInCase[]
     openedCases OpenedCase[]
