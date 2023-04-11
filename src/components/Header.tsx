@@ -8,7 +8,7 @@ import { Fragment } from "react";
 const Header = () => {
   const { data: session } = useSession();
 
-  const { data } = api.user.getBalance.useQuery();
+  const { data } = api.user.getBalance.useQuery({} as any, { enabled: !!session });
 
   const addBalance = () => {
     console.log("add balance");
@@ -71,14 +71,14 @@ const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownPr
       >
         <Menu.Items className="z-20 absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md border-2 border-red-500 bg-zinc-800 p-2">
           <div className="block md:hidden">
-          {balance && <Menu.Item key={"DROPDOWN/balance"} as={Fragment}>
-            <button
-              className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
-              onClick={addBalance}
-            >
-              {formatter.format(balance)}
-            </button>
-          </Menu.Item>}
+            {balance && <Menu.Item key={"DROPDOWN/balance"} as={Fragment}>
+              <button
+                className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+                onClick={addBalance}
+              >
+                {formatter.format(balance)}
+              </button>
+            </Menu.Item>}
           </div>
           <Menu.Item key={"DROPDOWN/profile"} as={Fragment}>
             <Link
