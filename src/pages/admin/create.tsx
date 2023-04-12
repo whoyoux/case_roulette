@@ -1,7 +1,9 @@
+import FindItem from "@/components/Admin/FindItem";
 import { ItemRarity } from "@/constants";
 import { authOptions } from "@/server/auth";
 import { prisma } from "@/server/db";
 import { api } from "@/utils/api";
+import isAdmin from "@/utils/isAdmin";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth";
 import { useEffect, useState } from "react";
@@ -12,8 +14,10 @@ type ItemType = {
   percents: number;
 };
 
+//Need to refactor this...
 const CreateCase: NextPage = () => {
   const [itemName, setItemName] = useState<string>("");
+  const [itemPrice, setItemPrice] = useState<string>("");
   const [itemRarity, setItemRarity] = useState<ItemRarity>("COMMON");
   const [itemImageURL, setItemImageURL] = useState<string>("");
 
@@ -163,39 +167,50 @@ const CreateCase: NextPage = () => {
   return (
     <main className="flex w-full flex-col items-center justify-center gap-10 pt-24">
       <h1 className="text-4xl">Create seed to DB</h1>
-      <div className="flex w-full flex-row justify-center gap-10">
-        <form className=" flex max-w-md flex-col gap-3 text-center">
-          <h1 className="text-2xl">Item Create</h1>
-          <input
-            type="text"
-            placeholder="Name"
-            className="form-input"
-            value={itemName}
-            onChange={(e) => setItemName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Image URL"
-            className="form-input"
-            value={itemImageURL}
-            onChange={(e) => setItemImageURL(e.target.value)}
-          />
-          <select onChange={(e) => onChangeRarity(e)} className="form-input ">
-            <option>COMMON</option>
-            <option>UNCOMMON</option>
-            <option>RARE</option>
-            <option>MYTHICAL</option>
-            <option>LEGENDARY</option>
-          </select>
-          <button
-            type="submit"
-            className="form-btn"
-            onClick={(e) => createItem(e)}
-          >
-            Create item
-          </button>
-          {newItemID && <h2>New Item ID: {newItemID}</h2>}
-        </form>
+      <div className="flex w-full flex-row justify-center gap-10 min-w-[500px]">
+        <div>
+          <form className="flex max-w-md flex-col gap-3 text-center">
+            <h1 className="text-2xl">Item Create</h1>
+            <input
+              type="text"
+              placeholder="Name"
+              className="form-input"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Price"
+              className="form-input"
+              value={itemPrice}
+              onChange={(e) => setItemPrice(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Image URL"
+              className="form-input"
+              value={itemImageURL}
+              onChange={(e) => setItemImageURL(e.target.value)}
+            />
+            <select onChange={(e) => onChangeRarity(e)} className="form-input ">
+              <option>COMMON</option>
+              <option>UNCOMMON</option>
+              <option>RARE</option>
+              <option>MYTHICAL</option>
+              <option>LEGENDARY</option>
+            </select>
+            <button
+              type="submit"
+              className="form-btn"
+              onClick={(e) => createItem(e)}
+            >
+              Create item
+            </button>
+            {newItemID && <h2>New Item ID: {newItemID}</h2>}
+          </form>
+          <FindItem />
+        </div>
+
 
         <form className="flex max-w-md flex-col gap-3  text-center">
           <h1 className="text-2xl">Case Create</h1>
@@ -207,7 +222,7 @@ const CreateCase: NextPage = () => {
             onChange={(e) => setCaseName(e.target.value)}
           />
           <input
-            type="text"
+            type="number"
             placeholder="Price"
             className="form-input"
             value={casePrice}
@@ -282,30 +297,12 @@ const CreateCase: NextPage = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  console.log("Checking if user is an admin.");
+  const adminUser = await isAdmin(ctx)
 
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
-  console.log(session);
-
-  if (!session) {
+  if (!adminUser) {
     return {
-      notFound: true,
-    };
-  }
-
-  const isAdminRes = await prisma.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-    select: {
-      isAdmin: true,
-    },
-  });
-
-  if (!isAdminRes || !isAdminRes.isAdmin) {
-    return {
-      notFound: true,
-    };
+      notFound: true
+    }
   }
 
   return {

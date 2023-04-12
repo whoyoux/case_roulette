@@ -1,6 +1,7 @@
 import { ItemRarity } from "@/constants";
 import { authOptions } from "@/server/auth";
 import { prisma } from "@/server/db";
+import isAdmin from "@/utils/isAdmin";
 import type { GetServerSidePropsContext, NextPage } from "next";
 import { getServerSession } from "next-auth";
 import React, { FormEvent, useEffect, useState } from "react";
@@ -9,6 +10,8 @@ type ItemType = {
   name: string;
   percents: number;
 };
+
+//DEPRACATED !!!
 
 const CaseCreate: NextPage = () => {
   const [seed, setSeed] = useState<string>("");
@@ -110,7 +113,7 @@ const CaseCreate: NextPage = () => {
           items: {
             create: [
               ${tempItems.map((item) => {
-                return `{
+        return `{
                   dropRate: ${item.percents},
                   item: {
                     connect: {
@@ -118,7 +121,7 @@ const CaseCreate: NextPage = () => {
                     },
                   },
                 },`;
-              })}
+      })}
             ],
           },
         },
@@ -168,6 +171,7 @@ const CaseCreate: NextPage = () => {
 
   return (
     <main className="flex w-full flex-col items-center justify-center gap-10 pt-24">
+      <h1 className="text-9xl text-bold">DEPRACATED</h1>
       <h1 className="text-4xl">Create seed to DB</h1>
       <div className="flex w-full flex-row justify-center gap-10">
         <form className=" flex max-w-md flex-col gap-3 text-center">
@@ -300,30 +304,12 @@ const CaseCreate: NextPage = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-  console.log("Checking if user is an admin.");
+  const adminUser = await isAdmin(ctx)
 
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
-  console.log(session);
-
-  if (!session) {
+  if (!adminUser) {
     return {
-      notFound: true,
-    };
-  }
-
-  const isAdminRes = await prisma.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-    select: {
-      isAdmin: true,
-    },
-  });
-
-  if (!isAdminRes || !isAdminRes.isAdmin) {
-    return {
-      notFound: true,
-    };
+      notFound: true
+    }
   }
 
   return {

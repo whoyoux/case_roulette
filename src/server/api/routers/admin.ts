@@ -92,4 +92,40 @@ export const adminRouter = createTRPCRouter({
         data: input,
       });
     }),
+  findItems: protectedProcedure
+    .input(z.object({
+      name: z.string().min(3)
+    }))
+    .query(async ({ input, ctx }) => {
+      const isAdminRes = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.session.user.id,
+        },
+        select: {
+          isAdmin: true,
+        },
+      });
+
+      if (!isAdminRes || !isAdminRes.isAdmin) {
+        new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Only admin can do this operation!",
+        });
+      }
+
+      const items = await ctx.prisma.item.findMany({
+        where: {
+          name: {
+            contains: input.name
+          }
+        },
+        select: {
+          id: true,
+          imageURL: true,
+          name: true,
+        }
+      })
+
+      return { items };
+    })
 });

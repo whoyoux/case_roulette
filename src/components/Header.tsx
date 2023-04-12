@@ -97,24 +97,18 @@ const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownPr
             </button>
           </Menu.Item>
           {isAdmin && (
-            <div className="mt-2 flex flex-col">
-              <Menu.Item key={"DROPDOWN/admin/create"} as={Fragment}>
-                <Link
-                  href="/admin/create"
-                  className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
-                >
-                  Create case
-                </Link>
-              </Menu.Item>
-              <Menu.Item key={"DROPDOWN/admin/create-seed"} as={Fragment}>
-                <Link
-                  href="/admin/create-seed"
-                  className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
-                >
-                  Create seed
-                </Link>
-              </Menu.Item>
-            </div>
+            <><div className="pl-2 pt-3 font-medium">Admin tools</div>
+              <div className="mt-2 flex flex-col">
+                <Menu.Item key={"DROPDOWN/admin/create"} as={Fragment}>
+                  <Link
+                    href="/admin/create"
+                    className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+                  >
+                    Create case
+                  </Link>
+                </Menu.Item>
+              </div></>
+
           )}
         </Menu.Items>
       </Transition>
