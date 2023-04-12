@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, adminProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { MINIMUM_CHARACTERS_TO_SEARCH } from "@/constants";
 
 export const adminRouter = createTRPCRouter({
-  itemCreate: protectedProcedure
+  itemCreate: adminProcedure
     .input(
       z.object({
         name: z.string(),
@@ -14,22 +14,6 @@ export const adminRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const isAdminRes = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          isAdmin: true,
-        },
-      });
-
-      if (!isAdminRes || !isAdminRes.isAdmin) {
-        new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Only admin can do this operation!",
-        });
-      }
-
       return await ctx.prisma.item.create({
         data: {
           name: input.name,
@@ -41,7 +25,7 @@ export const adminRouter = createTRPCRouter({
         },
       });
     }),
-  caseCreate: protectedProcedure
+  caseCreate: adminProcedure
     .input(
       z.object({
         name: z.string(),
@@ -62,22 +46,6 @@ export const adminRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const isAdminRes = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          isAdmin: true,
-        },
-      });
-
-      if (!isAdminRes || !isAdminRes.isAdmin) {
-        new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Only admin can do this operation!",
-        });
-      }
-
       const checkIfAllDropRatesItemsIsValid =
         input.items.create.reduce((acc, item) => acc + item.dropRate, 0) ===
         100;
@@ -93,27 +61,11 @@ export const adminRouter = createTRPCRouter({
         data: input,
       });
     }),
-  findItems: protectedProcedure
+  findItems: adminProcedure
     .input(z.object({
       name: z.string().min(MINIMUM_CHARACTERS_TO_SEARCH)
     }))
     .query(async ({ input, ctx }) => {
-      const isAdminRes = await ctx.prisma.user.findUnique({
-        where: {
-          id: ctx.session.user.id,
-        },
-        select: {
-          isAdmin: true,
-        },
-      });
-
-      if (!isAdminRes || !isAdminRes.isAdmin) {
-        new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Only admin can do this operation!",
-        });
-      }
-
       const items = await ctx.prisma.item.findMany({
         where: {
           name: {
@@ -129,5 +81,31 @@ export const adminRouter = createTRPCRouter({
       })
 
       return { items };
+    }),
+  getCases: adminProcedure
+    .query(async ({ ctx }) => {
+      return await ctx.prisma.case.findMany({
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          imageURL: true,
+          isAvailable: true,
+          items: {
+            select: {
+              id: true,
+              dropRate: true,
+              item: {
+                select: {
+                  id: true,
+                  name: true,
+                  imageURL: true,
+                  rarity: true
+                }
+              }
+            }
+          }
+        }
+      })
     })
 });

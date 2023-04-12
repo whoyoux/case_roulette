@@ -117,9 +117,6 @@ const CreateCase = () => {
     };
     return (
         <>
-            <Head>
-                <title>Admin panel - Case Roulette</title>
-            </Head>
             <form className="flex flex-col gap-3 text-center">
                 <h1 className="text-2xl">Case Create</h1>
                 <input

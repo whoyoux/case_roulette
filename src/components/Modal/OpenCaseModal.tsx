@@ -1,7 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
 import Image from 'next/image'
-import { ModalType } from '@/constants'
 import Modal from '.';
 
 type OpenCaseModalType = {

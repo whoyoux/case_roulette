@@ -104,7 +104,15 @@ const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownPr
                     href="/admin/create"
                     className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
                   >
-                    Create case
+                    Create
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key={"DROPDOWN/admin/manage"} as={Fragment}>
+                  <Link
+                    href="/admin/manage"
+                    className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+                  >
+                    Manage
                   </Link>
                 </Menu.Item>
               </div></>

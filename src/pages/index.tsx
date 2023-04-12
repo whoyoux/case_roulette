@@ -31,7 +31,7 @@ const Home: NextPage = (
                 passHref
                 key={caseObject.id}
               >
-                <div className="group flex cursor-pointer flex-col items-center rounded-lg border-2 border-transparent bg-zinc-800 px-4 py-2 font-medium hover:border-red-600">
+                <div className="group flex cursor-pointer flex-col items-center rounded-lg border-2 border-transparent bg-zinc-800 px-4 py-2 font-medium hover:border-red-500">
                   <Image
                     src={caseObject.imageURL}
                     alt="Case logo"

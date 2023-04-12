@@ -12,13 +12,12 @@ import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import superjson from "superjson";
 
+import OpenCaseModal from "@/components/Modal/OpenCaseModal";
+import customToast from "@/components/Notification";
 import { ItemRarity, colorsToItemRarity } from "@/constants";
 import { formatter } from "@/utils/balanceFormatter";
 import Image from "next/image";
-import toast from "react-hot-toast";
 import useSound from "use-sound";
-import OpenCaseModal from "@/components/Modal/OpenCaseModal";
-import customToast from "@/components/Notification";
 
 type ItemInRollType =
   | {
@@ -102,10 +101,6 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   useEffect(() => {
     if (anim && latestWonItem)
       anim.onfinish = () => {
-        // customToast({
-        //   message: latestWonItem.name,
-        //   imageURL: latestWonItem.imageURL,
-        // });
         setModal(true);
       }
 
