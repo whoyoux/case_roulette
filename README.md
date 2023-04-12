@@ -5,7 +5,7 @@
     Online casino with cases and skins from CS:GO
     <br />
     <br />
-    <a href="https://case-roulette.vercel.app/">View Demo</a>
+    <a href="https://case-roulette.vercel.app/" target="_blank">View Demo</a>
   </p>
 </div>
 
