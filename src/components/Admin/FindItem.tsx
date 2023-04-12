@@ -5,14 +5,15 @@ import { useState } from "react";
 
 import { debounce } from "ts-debounce";
 import copyToClipboard from "@/utils/copyToClipboard";
+import { MINIMUM_CHARACTERS_TO_SEARCH } from "@/constants";
 
 const FindItem = () => {
     const [name, setName] = useState<string>("");
 
-    const itemsQuery = api.admin.findItems.useQuery({ name: name.trimStart().trimEnd() }, { enabled: name.length >= 3, refetchOnWindowFocus: false });
+    const itemsQuery = api.admin.findItems.useQuery({ name: name.trimStart().trimEnd() }, { enabled: name.length >= MINIMUM_CHARACTERS_TO_SEARCH, refetchOnWindowFocus: false });
 
     const findItem = async () => {
-        if (name.length < 3) return;
+        if (name.length < MINIMUM_CHARACTERS_TO_SEARCH) return;
 
         console.log("Find item");
         await itemsQuery.refetch();
@@ -21,8 +22,7 @@ const FindItem = () => {
     const debouncedFindItem = debounce(findItem, 1000);
 
     return (
-        <div className="w-full mt-10 text-center">
-
+        <div className="w-full text-center flex flex-col">
             <h1 className="py-4 text-xl font-medium">Find item with name</h1>
             <input
                 type="text"
@@ -32,7 +32,7 @@ const FindItem = () => {
                 onChange={(e) => setName(e.target.value)}
                 onKeyUp={() => debouncedFindItem()}
             />
-            <div className="text-left my-2">
+            <div className="my-2">
                 <h2 className="text-xl">Items:</h2>
 
                 {itemsQuery.data && !itemsQuery.isLoading && itemsQuery.data.items.length === 0 && <p>Nothing found.</p>}
@@ -46,7 +46,7 @@ const FindItem = () => {
                                 <div>{item.name}</div>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="font-medium">{formatter.format(3.14)}</span>
+                                <span className="font-medium">{formatter.format(item.price)}</span>
                                 <button className="p-3 bg-red-500 rounded-sm font-medium" onClick={() => copyToClipboard(item.id, true, "Copied to clipboard!")}>Copy ID</button>
                             </div>
                         </div>

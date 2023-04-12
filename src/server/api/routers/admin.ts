@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { MINIMUM_CHARACTERS_TO_SEARCH } from "@/constants";
 
 export const adminRouter = createTRPCRouter({
   itemCreate: protectedProcedure
@@ -94,7 +95,7 @@ export const adminRouter = createTRPCRouter({
     }),
   findItems: protectedProcedure
     .input(z.object({
-      name: z.string().min(3)
+      name: z.string().min(MINIMUM_CHARACTERS_TO_SEARCH)
     }))
     .query(async ({ input, ctx }) => {
       const isAdminRes = await ctx.prisma.user.findUnique({
@@ -123,6 +124,7 @@ export const adminRouter = createTRPCRouter({
           id: true,
           imageURL: true,
           name: true,
+          price: true
         }
       })
 

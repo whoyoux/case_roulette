@@ -15,7 +15,7 @@ type ModalType = {
   children: React.ReactNode
 }
 
+const MINIMUM_CHARACTERS_TO_SEARCH = 2;
 
-
-export { colorsToItemRarity };
+export { colorsToItemRarity, MINIMUM_CHARACTERS_TO_SEARCH };
 export type { ItemRarity, ModalType };
