@@ -24,7 +24,7 @@ const Home: NextPage = (
         <div>
           <h1 className="mb-5 text-3xl font-bold">Our best cases</h1>
 
-          <div className="flex flex-col sm:flex-row gap-5 truncate">
+          <div className="flex flex-col sm:flex-row gap-5 truncate flex-wrap">
             {cases.map((caseObject) => (
               <Link
                 href={`/case/${caseObject.id}`}
