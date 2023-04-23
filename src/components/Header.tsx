@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <header className="flex w-screen max-w-full items-center justify-between bg-zinc-800 px-10 py-10">
-      <Link href="/" className="text-4xl font-medium">
+      <Link href="/" className="text-2xl md:text-4xl font-medium">
         Case Roulette
       </Link>
       <div className="flex items-center gap-5">

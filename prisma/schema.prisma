@@ -55,6 +55,18 @@ model User {
     balance       Float        @default(1000)
     openedCases   OpenedCase[]
     isAdmin       Boolean      @default(false)
+    seeds         Seed[]
+}
+
+model Seed {
+    id   String @id @default(cuid())
+    seed String
+
+    createdAt DateTime @default(now())
+    User      User?    @relation(fields: [userId], references: [id])
+    userId    String?
+
+    @@index([userId])
 }
 
 model OpenedCase {
@@ -65,6 +77,8 @@ model OpenedCase {
 
     wonItem Item   @relation(fields: [itemId], references: [id], onUpdate: Cascade)
     itemId  String
+
+    randomedNumber Int
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -79,6 +93,9 @@ model Case {
     imageURL String       @db.VarChar(500)
     price    Float
     items    ItemInCase[]
+
+    isFeatured Boolean    @default(false)
+    collection Collection @default(DEFAULT)
 
     isAvailable Boolean  @default(true)
     createdAt   DateTime @default(now())
@@ -131,4 +148,9 @@ enum Rarity {
     RARE
     MYTHICAL
     LEGENDARY
+}
+
+enum Collection {
+    DEFAULT
+    NEW
 }

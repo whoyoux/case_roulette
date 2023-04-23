@@ -10,7 +10,7 @@ const config = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["steamcdn-a.akamaihd.net", "csgostash.com", "steamcommunity-a.akamaihd.net"],
+    domains: ["steamcdn-a.akamaihd.net", "csgostash.com", "steamcommunity-a.akamaihd.net", "cdn.discordapp.com"],
   },
   reactStrictMode: true,
 

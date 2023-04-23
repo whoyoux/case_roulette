@@ -62,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
     transformer: superjson,
   });
 
-  const cases = await ssg.case.getAvailableCasesName.fetch();
+  const cases = await ssg.case.getFeaturedCases.fetch();
 
   return {
     props: {

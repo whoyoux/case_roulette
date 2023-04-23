@@ -21,6 +21,20 @@ export const caseRouter = createTRPCRouter({
       },
     });
   }),
+  getFeaturedCases: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.case.findMany({
+      where: {
+        isAvailable: true,
+        isFeatured: true
+      },
+      select: {
+        id: true,
+        name: true,
+        imageURL: true,
+        price: true,
+      },
+    });
+  }),
   getAvailableCaseWithItems: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.case.findMany({
       where: {
@@ -91,8 +105,6 @@ export const caseRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      // TODO: Wrap this in $transaction
-
       const { roll, wonItem } = await ctx.prisma.$transaction(async (tx) => {
         const caseObj = await tx.case.findFirst({
           where: {
@@ -158,12 +170,13 @@ export const caseRouter = createTRPCRouter({
         }
 
         const roll = [];
-        let randomInt = Math.random() * 100;
-        //TODO: Add to DB random int
+        const randomInt = Math.floor(Math.random() * 100) + 1;
+
+        let tempRandomed = randomInt;
 
         const wonItem = caseObj.items.find((item) => {
-          randomInt -= item.dropRate;
-          return randomInt <= 0;
+          tempRandomed -= item.dropRate;
+          return tempRandomed <= 0;
         });
 
         const totalLengthOfItems = caseObj.items.length;
@@ -189,6 +202,7 @@ export const caseRouter = createTRPCRouter({
                 id: wonItem!.item.id,
               },
             },
+            randomedNumber: randomInt
           },
         });
 

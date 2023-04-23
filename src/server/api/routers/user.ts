@@ -1,6 +1,15 @@
-import { z } from "zod";
-
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { TRPCError } from "@trpc/server";
+
+const createSeed = (length: number) => {
+  const availableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let randomString = '';
+  for (let i = 0; i < length; i++) {
+    randomString += availableChars[Math.floor(Math.random() * availableChars.length)];
+  }
+  return randomString;
+}
+
 
 export const userRouter = createTRPCRouter({
   getBalance: protectedProcedure.query(async ({ ctx }) => {
@@ -31,14 +40,79 @@ export const userRouter = createTRPCRouter({
         },
         createdAt: true,
       },
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
 
-    inv.sort(
-      (firstItem, secondItem) =>
-        new Date(secondItem.createdAt).valueOf() -
-        new Date(firstItem.createdAt).valueOf()
-    );
 
     return inv;
   }),
+  getSeed: protectedProcedure.query(async ({ ctx }) => {
+    const seed = await ctx.prisma.user.findUnique({
+      where: {
+        id: ctx.session.user.id
+      },
+      select: {
+        seeds: {
+          orderBy: {
+            createdAt: 'desc'
+          },
+          take: 1
+        }
+      }
+    })
+
+    if (!seed || seed?.seeds.length === 0) {
+      const newSeedObject = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id
+        },
+        data: {
+          seeds: {
+            create: {
+              seed: createSeed(30)
+            }
+          }
+        },
+        select: {
+          seeds: {
+            orderBy: {
+              createdAt: 'desc'
+            },
+            take: 1
+          }
+        }
+      })
+
+      return newSeedObject.seeds[0]?.seed;
+    }
+
+    return seed.seeds[0]?.seed;
+  }),
+  regenerateSeed: protectedProcedure
+    .mutation(async ({ ctx }) => {
+      const newSeed = await ctx.prisma.user.update({
+        where: {
+          id: ctx.session.user.id
+        },
+        data: {
+          seeds: {
+            create: {
+              seed: createSeed(30)
+            }
+          }
+        },
+        select: {
+          seeds: {
+            orderBy: {
+              createdAt: 'desc'
+            },
+            take: 1
+          }
+        }
+      })
+
+      return newSeed.seeds[0]?.seed
+    })
 });
