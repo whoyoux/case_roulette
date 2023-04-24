@@ -167,7 +167,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}
-                className="relative flex flex-col items-center rounded-2xl bg-zinc-800 p-4"
+                className="relative flex flex-col items-center justify-center text-center rounded-2xl bg-zinc-800 p-4"
               >
                 <Image
                   src={item.imageURL}
@@ -178,8 +178,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   placeholder="blur"
                   blurDataURL={item.imageURL}
                 />
-                <h4 className="text-sm font-medium">{item.name}</h4>
-                <div>{dropRate}%</div>
+                <h4 className="text-xs font-medium">{item.name}</h4>
+                <h4 className="text-xs font-medium">{dropRate}%</h4>
               </div>
             ))}
           </div>
