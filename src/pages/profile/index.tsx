@@ -56,12 +56,13 @@ const UserPage: NextPage = () => {
           <button className="btn btn-sm" onClick={getNewSeed} disabled={isLoading}>Create new seed</button>
         </div>
 
-        <div className="flex flex-row flex-wrap gap-3 justify-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 justify-center">
+          {/* <div className="flex flex-row flex-wrap gap-3 justify-center"> */}
           {items &&
             items.length > 0 &&
             items.map((item) => (
               <div
-                className={`flex h-[300px] w-[240px] flex-col items-center justify-center ${colorsToItemRarity[item.wonItem.rarity]
+                className={`flex py-10 px-5 flex-col items-center justify-center ${colorsToItemRarity[item.wonItem.rarity]
                   } bg-opacity-75`}
               >
                 <Image
@@ -73,6 +74,7 @@ const UserPage: NextPage = () => {
                   blurDataURL={item.wonItem.imageURL}
                 />
                 <p className="truncate font-medium text-xs">{item.wonItem.name}</p>
+                <button className="btn btn-xs w-full mt-5">SELL</button>
               </div>
             ))}
         </div>
