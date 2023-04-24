@@ -6,7 +6,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Toaster />
       <Header />
-      {children}
+      <div className="max-w-6xl mx-auto w-full">
+        {children}
+      </div>
     </>
   );
 };

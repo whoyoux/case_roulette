@@ -44,6 +44,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [isOpenModal, setModal] = useState<boolean>(false);
 
   const rollRef = useRef<HTMLDivElement | null>(null);
+  const rollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const [play, { stop }] = useSound("/opening4s.mp3");
 
@@ -81,21 +82,21 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
     if (anim) anim.cancel();
 
-    setAnim(
-      rollRef.current!.animate(
-        [
-          {
-            transform: `translateX(-${0.9 * 208 * 49 - ((window.innerWidth * (11 / 12)) / 2 - 80)
-              }px)`,
-          },
-        ],
+    const newAnim = rollRef.current!.animate(
+      [
         {
-          duration: 4000,
-          fill: "forwards",
-          easing: "cubic-bezier(0,0,0,1)",
+          transform: `translateX(-${(44 * 208 - (rollContainerRef.current!.offsetWidth / 2)) + 104}px)`
         }
-      )
-    );
+      ],
+      {
+        duration: 4000,
+        fill: "forwards",
+        easing: "cubic-bezier(0,0,0,1)",
+      }
+
+    )
+
+    setAnim(newAnim);
   };
 
   useEffect(() => {
@@ -118,13 +119,13 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
       <OpenCaseModal itemName={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} closeModal={() => setModal(false)} title="New drop 😯😯😯" />
 
-      <div className="w-screen">
+      <div className="w-full">
         <div className="flex flex-col items-center">
           <h2 className="mt-20 text-5xl font-bold">{caseObj.name}</h2>
 
           {/* CASE ITEMS ROLL */}
 
-          <div className="relative mt-10 flex h-64  w-11/12 items-center overflow-hidden bg-zinc-800">
+          <div className="relative mt-10 flex h-64 w-full items-center overflow-hidden bg-zinc-800" ref={rollContainerRef}>
             <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:text-red-500 before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:text-red-500 after:content-['▲']"></div>
             <div
               ref={rollRef}
@@ -164,8 +165,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
         {/* ITEMS IN CASE  */}
 
-        <div className="w-11/12 px-10">
-          <h2 className="mt-10 text-2xl">Items in this case</h2>
+        <div className="w-full">
+          <h2 className="mt-10 text-2xl">You can drop:</h2>
           <div className="mt-5 flex flex-col flex-wrap gap-5 md:flex-row">
             {caseObj.items.map(({ item, dropRate }) => (
               <div

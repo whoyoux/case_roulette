@@ -1,17 +1,14 @@
-import { GetStaticProps, InferGetStaticPropsType, type NextPage } from "next";
+import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import superjson from "superjson";
 import { appRouter } from "@/server/api/root";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { prisma } from "@/server/db";
 import { Case } from "@prisma/client";
+import FeaturedCases from "@/components/HomePage/FeaturedCases";
 
-const Home: NextPage = (
-  props: InferGetStaticPropsType<typeof getStaticProps>
-) => {
+const Home: NextPage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const cases = props.cases! as Case[];
   return (
     <>
@@ -23,34 +20,13 @@ const Home: NextPage = (
       <main className="p-10">
         <div>
           <h1 className="mb-5 text-3xl font-bold">Our best cases</h1>
-
-          <div className="flex flex-col sm:flex-row gap-5 truncate flex-wrap">
-            {cases.map((caseObject) => (
-              <Link
-                href={`/case/${caseObject.id}`}
-                passHref
-                key={caseObject.id}
-              >
-                <div className="group flex cursor-pointer flex-col items-center rounded-lg border-2 border-transparent bg-zinc-800 px-4 py-2 font-medium hover:border-red-500">
-                  <Image
-                    src={caseObject.imageURL}
-                    alt="Case logo"
-                    width={200}
-                    height={200}
-                    className="transition-all group-hover:scale-110"
-                    placeholder="blur"
-                    blurDataURL={caseObject.imageURL}
-                  />
-                  <h1 className="text-xl">{caseObject.name}</h1>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <FeaturedCases cases={cases} />
         </div>
       </main>
     </>
   );
 };
+
 
 export const getStaticProps: GetStaticProps = async () => {
   const ssg = createProxySSGHelpers({
@@ -72,5 +48,6 @@ export const getStaticProps: GetStaticProps = async () => {
     revalidate: 10,
   };
 };
+
 
 export default Home;
