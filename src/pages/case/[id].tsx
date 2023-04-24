@@ -104,8 +104,6 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       anim.onfinish = () => {
         setModal(true);
       }
-
-
     return () => {
       if (anim) anim.onfinish = () => { };
     };
@@ -124,7 +122,6 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           <h2 className="mt-20 text-5xl font-bold">{caseObj.name}</h2>
 
           {/* CASE ITEMS ROLL */}
-
           <div className="relative mt-10 flex h-64 w-full items-center overflow-hidden bg-zinc-800" ref={rollContainerRef}>
             <div className="before:absolute before:inset-x-0 before:top-0 before:text-center before:text-2xl before:text-red-500 before:content-['▼'] after:absolute after:inset-x-0 after:bottom-0 after:text-center after:text-2xl after:text-red-500 after:content-['▲']"></div>
             <div
@@ -147,7 +144,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       placeholder="blur"
                       blurDataURL={item?.item.imageURL}
                     />
-                    <p className="truncate text-sm font-medium">{item?.item.name}</p>
+                    <h5 className="truncate text-sm font-medium">{item?.item.name}</h5>
                   </div>
                 ))}
             </div>
@@ -164,16 +161,14 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         </div>
 
         {/* ITEMS IN CASE  */}
-
         <div className="w-full">
           <h2 className="mt-10 text-2xl">You can drop:</h2>
-          <div className="mt-5 flex flex-col flex-wrap gap-5 md:flex-row">
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 md:flex-row">
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}
                 className="relative flex flex-col items-center rounded-2xl bg-zinc-800 p-4"
               >
-                <div>{dropRate}%</div>
                 <Image
                   src={item.imageURL}
                   alt="Case logo"
@@ -184,6 +179,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   blurDataURL={item.imageURL}
                 />
                 <h4 className="text-sm font-medium">{item.name}</h4>
+                <div>{dropRate}%</div>
               </div>
             ))}
           </div>
