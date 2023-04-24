@@ -163,7 +163,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         {/* ITEMS IN CASE  */}
         <div className="w-full">
           <h2 className="mt-10 text-2xl">You can drop:</h2>
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 md:flex-row">
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5 md:flex-row justify-items-stretch">
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}

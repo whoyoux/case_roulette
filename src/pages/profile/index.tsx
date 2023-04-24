@@ -56,7 +56,7 @@ const UserPage: NextPage = () => {
           <button className="btn btn-sm" onClick={getNewSeed} disabled={isLoading}>Create new seed</button>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 justify-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
           {/* <div className="flex flex-row flex-wrap gap-3 justify-center"> */}
           {items &&
             items.length > 0 &&
