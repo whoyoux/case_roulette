@@ -28,7 +28,7 @@ const UserPage: NextPage = () => {
       <Head>
         <title>My profile - Case Roulette</title>
       </Head>
-      <div className="px-0 md:px-20">
+      <div>
 
         <div className="w-full flex flex-col md:flex-row items-center pt-10 gap-5 ">
           <div className="flex flex-col items-center">
@@ -57,7 +57,6 @@ const UserPage: NextPage = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
-          {/* <div className="flex flex-row flex-wrap gap-3 justify-center"> */}
           {items &&
             items.length > 0 &&
             items.map((item) => (

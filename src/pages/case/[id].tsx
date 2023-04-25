@@ -134,7 +134,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   <div
                     key={`${item?.id}__${index}`}
                     className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${colorsToItemRarity[item!.item.rarity]
-                      }`}
+                      } bg-opacity-70`}
                   >
                     <Image
                       src={item?.item.imageURL || ''}
@@ -143,6 +143,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                       height={Infinity}
                       placeholder="blur"
                       blurDataURL={item?.item.imageURL}
+                      priority
                     />
                     <h5 className="truncate text-sm font-medium">{item?.item.name}</h5>
                   </div>
@@ -177,6 +178,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   className="w-[150px]"
                   placeholder="blur"
                   blurDataURL={item.imageURL}
+
                 />
                 <h4 className="text-xs font-medium">{item.name}</h4>
                 <h4 className="text-xs font-medium">{dropRate}%</h4>
