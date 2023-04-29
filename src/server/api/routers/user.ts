@@ -36,6 +36,7 @@ export const userRouter = createTRPCRouter({
             name: true,
             imageURL: true,
             rarity: true,
+            price: true
           },
         },
         createdAt: true,

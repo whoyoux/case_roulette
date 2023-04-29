@@ -14,7 +14,7 @@ import superjson from "superjson";
 
 import OpenCaseModal from "@/components/Modal/OpenCaseModal";
 import customToast from "@/components/Notification";
-import { ItemRarity, colorsToItemRarity } from "@/constants";
+import { ItemRarity, bgGradient, colorsToItemRarity } from "@/constants";
 import { formatter } from "@/utils/balanceFormatter";
 import Image from "next/image";
 import useSound from "use-sound";
@@ -133,7 +133,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 roll.map((item, index) => (
                   <div
                     key={`${item?.id}__${index}`}
-                    className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${colorsToItemRarity[item!.item.rarity]
+                    className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${bgGradient[item!.item.rarity]
                       } bg-opacity-70`}
                   >
                     <Image

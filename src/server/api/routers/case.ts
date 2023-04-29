@@ -6,6 +6,7 @@ import {
   publicProcedure,
 } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { getSHA256 } from "@/utils/random";
 
 export const caseRouter = createTRPCRouter({
   getAvailableCasesName: publicProcedure.query(({ ctx }) => {
@@ -170,6 +171,10 @@ export const caseRouter = createTRPCRouter({
         }
 
         const roll = [];
+
+        const hash = getSHA256();
+        console.log(hash);
+
         const randomInt = Math.floor(Math.random() * 100) + 1;
 
         let tempRandomed = randomInt;

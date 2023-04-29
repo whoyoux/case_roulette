@@ -1,10 +1,11 @@
-import { colorsToItemRarity } from "@/constants";
+import { bgGradient, colorsToItemRarity } from "@/constants";
 import { api } from "@/utils/api";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import { formatter } from "@/utils/balanceFormatter";
 
 const UserPage: NextPage = () => {
   const { data: session } = useSession();
@@ -22,6 +23,12 @@ const UserPage: NextPage = () => {
     await regenerateSeed();
     await refetch();
   }
+
+  const [totalValue, setTotalValue] = useState<number>();
+
+  useEffect(() => {
+    setTotalValue(items?.reduce((acc, item) => acc + item.wonItem.price, 0))
+  }, [items])
 
   return (
     <>
@@ -48,7 +55,7 @@ const UserPage: NextPage = () => {
 
         </div>
 
-        <div className="flex flex-col p-5 gap-4 max-w-lg mx-auto md:mt-10 md:mx-0">
+        <div className="flex flex-col py-5 gap-4 max-w-lg mx-auto md:mt-10 md:mx-0">
           <div className="flex flex-col md:flex-row md:justify-between md:text-xl gap-2">
             <h3>My seed:</h3>
             <b>{seed ? seed.toString() : 'Not found'}</b>
@@ -56,12 +63,18 @@ const UserPage: NextPage = () => {
           <button className="btn btn-sm" onClick={getNewSeed} disabled={isLoading}>Create new seed</button>
         </div>
 
+        <div className="text-2xl py-5">
+          Total inv value: <b>{formatter.format(totalValue ? totalValue : 0)}</b>
+        </div>
+
+
+
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
           {items &&
             items.length > 0 &&
             items.map((item) => (
               <div
-                className={`flex py-10 px-5 flex-col items-center justify-center ${colorsToItemRarity[item.wonItem.rarity]
+                className={`flex py-10 px-5 flex-col items-center justify-center ${bgGradient[item.wonItem.rarity]
                   } bg-opacity-75`}
               >
                 <Image
@@ -73,7 +86,7 @@ const UserPage: NextPage = () => {
                   blurDataURL={item.wonItem.imageURL}
                 />
                 <p className="truncate font-medium text-xs">{item.wonItem.name}</p>
-                <button className="btn btn-xs w-full mt-5">SELL</button>
+                <button className="btn btn-xs w-full mt-5">SELL FOR {formatter.format(item.wonItem.price)}</button>
               </div>
             ))}
         </div>
