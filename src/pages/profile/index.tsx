@@ -37,7 +37,7 @@ const UserPage: NextPage = () => {
       </Head>
       <div>
 
-        <div className="w-full flex flex-col md:flex-row items-center pt-10 gap-5 ">
+        <div className="w-full flex flex-col items-center pt-10 gap-5 ">
           <div className="flex flex-col items-center">
             <Image
               src={session?.user.image || ''}
@@ -48,15 +48,12 @@ const UserPage: NextPage = () => {
 
               className="rounded-full w-[150px] h-[150px] sm:w-[200px] sm:h-[200px]"
             />
-            <h2 className="hidden md:block text-3xl font-medium">{session?.user.name}</h2>
           </div>
-          <h2 className="text-3xl font-medium md:hidden">{session?.user.name}</h2>
-          <button className="btn btn-sm sm:btn">Deposit</button>
-
+          <h2 className="text-3xl font-medium">{session?.user.name}</h2>
         </div>
 
-        <div className="flex flex-col py-5 gap-4 max-w-lg mx-auto md:mt-10 md:mx-0">
-          <div className="flex flex-col md:flex-row md:justify-between md:text-xl gap-2">
+        <div className="flex flex-col py-5 gap-4 max-w-lg mx-auto md:mt-10">
+          <div className="flex flex-col md:text-xl gap-2">
             <h3>My seed:</h3>
             <b>{seed ? seed.toString() : 'Not found'}</b>
           </div>
