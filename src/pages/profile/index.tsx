@@ -6,9 +6,24 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import { formatter } from "@/utils/balanceFormatter";
+import { Listbox, Transition } from '@headlessui/react'
+import { ArrowUpDown, Check } from "lucide-react";
+
+type SortingMethodType = {
+  id: string
+  value: string
+}
+
+const sortingMethods: SortingMethodType[] = [
+  { id: 'sort-by-newest', value: 'newest' },
+  { id: 'sort-by-oldest', value: 'oldest' },
+  { id: 'sort-by-most-pricey', value: 'most pricey' },
+  { id: 'sort-by-less-pricey', value: 'less pricey' },
+]
 
 const UserPage: NextPage = () => {
   const { data: session } = useSession();
+  const [selectedSortingMethod, setSelectedSortingMethod] = useState<SortingMethodType>({ id: 'sort-by-newest', value: 'newest' });
 
   if (!session) {
     <h1>You have to sign in to see this page!</h1>;
@@ -65,8 +80,40 @@ const UserPage: NextPage = () => {
         </div>
 
 
-
+        <div className="w-full pb-5 pt-2 flex items-center text-xl justify-between">
+          <span>Sort by</span>
+          <div className="relative">
+            <Listbox value={selectedSortingMethod} onChange={setSelectedSortingMethod}>
+              <Listbox.Button className="flex items-center gap-3">{selectedSortingMethod.value} <ArrowUpDown /></Listbox.Button>
+              <Transition
+                as={React.Fragment}
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <Listbox.Options className="absolute mt-1 w-48 right-0 origin-top-right overflow-auto rounded-md bg-zinc-800 py-1 text-base">
+                  {sortingMethods.map(sortingMethod => (
+                    <Listbox.Option
+                      key={sortingMethod.id}
+                      value={sortingMethod}
+                      as={React.Fragment}
+                    >
+                      <li className="ui-active:bg-red-500 text-white flex justify-center items-center gap-2 cursor-pointer w-full text-md py-1">
+                        <Check className="hidden ui-selected:block" size={18} />
+                        {sortingMethod.value}
+                      </li>
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </Listbox>
+          </div>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3">
+
           {items &&
             items.length > 0 &&
             items.map((item) => (

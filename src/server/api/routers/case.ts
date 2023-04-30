@@ -125,6 +125,7 @@ export const caseRouter = createTRPCRouter({
                     name: true,
                     imageURL: true,
                     rarity: true,
+                    price: true
                   },
                 },
               },

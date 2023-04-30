@@ -39,6 +39,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [latestWonItem, setLatestWonItem] = useState({
     name: "",
     imageURL: "",
+    price: 0
   });
 
   const [isOpenModal, setModal] = useState<boolean>(false);
@@ -74,9 +75,8 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     setLatestWonItem({
       name: res.wonItem!.item.name,
       imageURL: res.wonItem!.item.imageURL,
+      price: res.wonItem!.item.price
     });
-
-
 
     if (!rollRef) return;
 
@@ -115,7 +115,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <title>{`${caseObj.name} - Case Roulette`}</title>
       </Head>
 
-      <OpenCaseModal itemName={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} closeModal={() => setModal(false)} title="New drop 😯😯😯" />
+      <OpenCaseModal itemName={latestWonItem.name} imageURL={latestWonItem.imageURL} isOpen={isOpenModal} price={latestWonItem.price} closeModal={() => setModal(false)} title="You won" />
 
       <div className="w-full">
         <div className="flex flex-col items-center">
@@ -181,8 +181,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
                 />
                 <h4 className="text-xs font-medium">{item.name}</h4>
-                <h4 className="text-xs font-medium">{dropRate}%</h4>
-                <div className="hidden absolute inset-0 opacity-90 bg-black group-hover:flex flex-col items-center justify-center">Chance: <span>{dropRate}%</span></div>
+                <div className="hidden absolute inset-0 opacity-90 bg-black group-hover:flex flex-col items-center justify-center ">Chance: <span>{dropRate}%</span></div>
               </div>
             ))}
           </div>
