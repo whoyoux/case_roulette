@@ -134,7 +134,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                   <div
                     key={`${item?.id}__${index}`}
                     className={`mx-[4px] flex h-[200px] w-[200px] flex-col items-center justify-center overflow-hidden ${bgGradient[item!.item.rarity]
-                      } bg-opacity-70`}
+                      } rounded`}
                   >
                     <Image
                       src={item?.item.imageURL || ''}
@@ -168,7 +168,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             {caseObj.items.map(({ item, dropRate }) => (
               <div
                 key={item.id}
-                className="relative flex flex-col items-center justify-center text-center rounded-2xl bg-zinc-800 p-4"
+                className={`relative flex flex-col items-center justify-center text-center rounded ${bgGradient[item.rarity]} p-4 group`}
               >
                 <Image
                   src={item.imageURL}
@@ -182,6 +182,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 />
                 <h4 className="text-xs font-medium">{item.name}</h4>
                 <h4 className="text-xs font-medium">{dropRate}%</h4>
+                <div className="hidden absolute inset-0 opacity-90 bg-black group-hover:flex flex-col items-center justify-center">Chance: <span>{dropRate}%</span></div>
               </div>
             ))}
           </div>

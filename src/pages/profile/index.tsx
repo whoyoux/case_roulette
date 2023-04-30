@@ -72,7 +72,7 @@ const UserPage: NextPage = () => {
             items.map((item) => (
               <div
                 className={`flex py-10 px-5 flex-col items-center justify-center ${bgGradient[item.wonItem.rarity]
-                  } bg-opacity-75`}
+                  } rounded`}
               >
                 <Image
                   src={item.wonItem.imageURL}

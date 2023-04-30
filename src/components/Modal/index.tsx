@@ -32,7 +32,7 @@ const Modal = ({ isOpen = false, closeModal, title, children }: ModalType) => {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-zinc-900 border-2 border-red-500 text-white p-6 text-left align-middle shadow-xl transition-all flex flex-col justify-center items-center gap-4">
+                                <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-zinc-800 text-white p-6 text-left align-middle shadow-xl transition-all flex flex-col justify-center items-center gap-4">
                                     <Dialog.Title
                                         as="h3"
                                         className="text-2xl font-medium leading-6 py-2"
@@ -41,7 +41,6 @@ const Modal = ({ isOpen = false, closeModal, title, children }: ModalType) => {
                                     </Dialog.Title>
 
                                     {children}
-
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
