@@ -1,3 +1,5 @@
+
+const defaultTheme = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -32,6 +34,9 @@ const config = {
         roll: "rollAnim 10s easy-in-out infinite",
         enter: "fadeInRight 300ms ease-out",
         leave: "fadeOutLeft 300ms ease-in forwards",
+      },
+      fontFamily: {
+        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
       },
     },
   },
