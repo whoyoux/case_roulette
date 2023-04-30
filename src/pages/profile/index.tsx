@@ -1,4 +1,4 @@
-import { bgGradient, colorsToItemRarity } from "@/constants";
+import { bgGradient } from "@/constants";
 import { api } from "@/utils/api";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";

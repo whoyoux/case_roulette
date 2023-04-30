@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
+import { LogIn, LogOut, User, Landmark } from "lucide-react";
+
 const Header = () => {
   const { data: session } = useSession();
 
@@ -37,8 +39,8 @@ const Header = () => {
           </>
         ) : (
           <>
-            <div className="btn" onClick={() => signIn("discord")}>
-              login
+            <div className="btn flex items-center gap-2" onClick={() => signIn("discord")}>
+              login <LogIn />
             </div>
           </>
         )}
@@ -83,17 +85,25 @@ const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownPr
           <Menu.Item key={"DROPDOWN/profile"} as={Fragment}>
             <Link
               href="/profile"
-              className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900"
+              className="w-full rounded-sm px-2 py-2 hover:bg-zinc-900 flex items-center gap-2"
             >
-              Profile
+              <User size={18} /> Profile
             </Link>
+          </Menu.Item>
+          <Menu.Item key={"DROPDOWN/deposit"} as={Fragment}>
+            <button
+              className="w-full rounded-sm px-2 py-2 text-left hover:bg-zinc-900 flex items-center gap-2"
+              onClick={() => { }}
+            >
+              <Landmark size={18} /> Deposit
+            </button>
           </Menu.Item>
           <Menu.Item key={"DROPDOWN/sign-out"} as={Fragment}>
             <button
-              className="w-full rounded-sm px-2 py-2 text-left hover:bg-zinc-900"
+              className="w-full rounded-sm px-2 py-2 text-left hover:bg-zinc-900 flex items-center gap-2"
               onClick={() => signOut()}
             >
-              Sign out
+              <LogOut size={18} /> Sign out
             </button>
           </Menu.Item>
           {isAdmin && (

@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Toaster />
       <Header />
       <div className="max-w-6xl mx-auto w-full px-5">
-        <LiveDropBar />
+        {/* <LiveDropBar /> */}
         {children}
       </div>
     </>
