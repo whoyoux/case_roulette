@@ -71,7 +71,7 @@ const UserDropdown = ({ username, isAdmin, balance, addBalance }: UserDropdownPr
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="z-20 absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md border-2 border-red-500 bg-zinc-800 p-2">
+        <Menu.Items className="z-20 absolute right-0 flex w-[200px] origin-top-right flex-col rounded-md bg-zinc-700 p-2">
           <div className="block md:hidden">
             {balance && <Menu.Item key={"DROPDOWN/balance"} as={Fragment}>
               <button
