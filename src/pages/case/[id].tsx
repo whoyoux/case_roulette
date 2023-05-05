@@ -181,7 +181,7 @@ const Case = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
                 />
                 <h4 className="text-xs font-medium">{item.name}</h4>
-                <div className="hidden absolute inset-0 opacity-90 bg-black group-hover:flex flex-col items-center justify-center ">Chance: <span>{dropRate}%</span></div>
+                <div className="hidden absolute inset-0 opacity-90 bg-black group-hover:flex flex-col items-center justify-center "><div>Chance: <span>{dropRate}%</span></div><div>Price: {formatter.format(item.price)}</div></div>
               </div>
             ))}
           </div>
